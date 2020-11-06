@@ -1,0 +1,47 @@
+Human:
+is hungry -> has food -> eat food 
+			-> doesnt have food -> goes to find food -> finds food -> eats -> continue with previous task
+									-> does not find food -> continues search
+												-> if nighttime -> return to home	
+															-> night-time regiment 
+homeless -> find wood -> find tree -> chop down tree -> build home
+			-> find lumber -> build home
+			   -> does not find wood -> continue search
+						   -> if nighttime -> sleep on ground
+
+sees monster -> has weapon -> fight -> if health becomes low -> flee
+			-> does not have weapon -> flee
+
+sees food -> place food into inventory -> inventory is full -> continue with previous task
+					-> continue with previous task
+
+is cold -> return home
+	-> find campfire -> build campfire -> need wood -> search for wood -> find wood -> build campfire -> continue with previous task
+			 							-> doesnt find wood -> return home 
+													-> homeless -> flee from cold
+															-> cant flee -> continue with previous task
+is warm -> return home
+	-> drink water -> need water -> search for water -> find water -> drink water -> continue with previous task
+								-> doent find water -> return home
+											-> homeless -> flee from warmth
+													-> cant flee -> continue with previous task
+is raining -> return home
+		-> homeless -> homeless regiment
+					-> seek tree
+					-> seek campfire
+													
+is night-time -> return home -> is homeless -> build campfire -> does not have wood -> sleep on ground		
+						-> sleep next to campfire
+
+see weapon -> has weapon -> check if weapon found is better -> replace current weapon
+		-> does not have weapon -> place weapon into inventory
+
+no weapon -> has wood -> make club
+		-> search for wood regiment
+
+dies -> spawn meat 
+
+
+
+
+
