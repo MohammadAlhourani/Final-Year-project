@@ -1,11 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
 
 
-public class GridMap
+public class GridMap<TGridObject>
 {
+
+
+
+    public event EventHandler<onGridObjectChangeEventArgs> onGridObjectChange;
+    public class onGridObjectChangeEventArgs : EventArgs
+    {
+        public int x;
+        public int y;
+    }
+
+
     //the width of the array (x value)
     private int m_width;
 
@@ -15,40 +27,49 @@ public class GridMap
     private float m_cellSize;
 
     //the map array
-    private int[,] m_gridarray;
+    private TGridObject[,] m_gridarray;
 
     Color green = new Color(0, 255, 0);
 
     //constructor for a new map
-    public GridMap(int t_x, int t_y , float t_cellsize)
+    public GridMap(int t_x, int t_y , float t_cellsize, Func<GridMap<TGridObject>, int, int ,TGridObject> createGridObject)
     {
         this.m_width = t_x;
         this.m_height = t_y;
         this.m_cellSize = t_cellsize;
 
-        m_gridarray = new int[m_width, m_height];
+        m_gridarray = new TGridObject[m_width, m_height];
 
-        for(int x = 0; x < m_gridarray.GetLength(0); x++ )
+
+        //initilises the grid with default objects of its type
+        for (int x = 0; x < m_gridarray.GetLength(0); x++)
         {
-            for(int y = 0; y < m_gridarray.GetLength(1); y++)
+            for (int y = 0; y < m_gridarray.GetLength(1); y++)
             {
-
-                Debug.DrawLine(worldPos(x, y), worldPos(x , y + 1) , green , 100f);
-
-                Debug.DrawLine(worldPos(x, y), worldPos(x + 1, y), green, 100f);
-
+                m_gridarray[x, y] = createGridObject(this, x, y);
             }
         }
 
-        Debug.DrawLine(worldPos(m_width, 0), worldPos(m_width , m_height), green, 100f);
-
-        Debug.DrawLine(worldPos(0 ,m_height), worldPos(m_width, m_height), green, 100f);
+        setGridDebugLine();
     }
 
+    public int getWidth()
+    {
+        return m_width;
+    }
 
+    public int getHeight()
+    {
+        return m_height;
+    }
+
+    public float getCellSize()
+    {
+        return m_cellSize;
+    }
 
     //returns the position of a cell in the world for the array
-    private Vector3 worldPos(int t_x, int t_y)
+    public Vector3 worldPos(int t_x, int t_y)
     {
         return (new Vector3(t_x, t_y , 0) * m_cellSize);
     }
@@ -61,25 +82,34 @@ public class GridMap
         t_y = Mathf.FloorToInt(t_position.y / m_cellSize);
     }
 
-    private void setValue(int t_x, int t_y , int t_value)
+    private void setGridObject(int t_x, int t_y , TGridObject t_value)
     {
         if (t_x >= 0 && t_y >= 0 && t_x < m_width && t_y < m_height)
         {
             m_gridarray[t_x, t_y] = t_value;
+
+            if (onGridObjectChange != null) onGridObjectChange(this, new onGridObjectChangeEventArgs { x = t_x, y = t_y });
         }
     }
 
-    public void setValue(Vector3 t_pos, int t_value)
+    public void setGridObject(Vector3 t_pos, TGridObject t_value)
     {
         int x;
         int y;
 
         getXY(t_pos, out x, out y);
 
-        setValue(x, y, t_value);
+        setGridObject(x, y, t_value);
     }
 
-    public int getValue(int t_x, int t_y)
+
+    public void triggerObjectChange(int t_x, int t_y)
+    {
+        if (onGridObjectChange != null) onGridObjectChange(this, new onGridObjectChangeEventArgs { x = t_x, y = t_y });
+    }
+
+
+    public TGridObject getGridObject(int t_x, int t_y)
     {
         if (t_x >= 0 && t_y >= 0 && t_x < m_width && t_y < m_height)
         {
@@ -87,11 +117,11 @@ public class GridMap
         }
         else
         {
-            return 0;
+            return default(TGridObject);
         }
     }
 
-    public int getValue(Vector3 t_pos)
+    public TGridObject getGridObject(Vector3 t_pos)
     {
         int x;
         int y;
@@ -101,5 +131,25 @@ public class GridMap
         Debug.Log(x + " " + y);
 
         return m_gridarray[x, y];
+    }
+
+
+    private void setGridDebugLine()
+    {
+        for (int x = 0; x < m_gridarray.GetLength(0); x++)
+        {
+            for (int y = 0; y < m_gridarray.GetLength(1); y++)
+            {
+
+                Debug.DrawLine(worldPos(x, y), worldPos(x, y + 1), green, 100f);
+
+                Debug.DrawLine(worldPos(x, y), worldPos(x + 1, y), green, 100f);
+
+            }
+        }
+
+        Debug.DrawLine(worldPos(m_width, 0), worldPos(m_width, m_height), green, 100f);
+
+        Debug.DrawLine(worldPos(0, m_height), worldPos(m_width, m_height), green, 100f);
     }
 }
