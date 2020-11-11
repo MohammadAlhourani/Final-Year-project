@@ -99,7 +99,10 @@ public class GridMap<TGridObject>
 
         getXY(t_pos, out x, out y);
 
-        setGridObject(x, y, t_value);
+        if (x >= 0 && y >= 0 && x < m_width && y < m_height)
+        {
+            setGridObject(x, y, t_value);
+        }
     }
 
 
@@ -130,15 +133,22 @@ public class GridMap<TGridObject>
 
         Debug.Log(x + " " + y);
 
-        return m_gridarray[x, y];
+        if (x >= 0 && y >= 0 && x < m_width && y < m_height)
+        {
+            return m_gridarray[x, y];
+        }
+        else
+        {
+            return default(TGridObject);
+        }
     }
 
 
     private void setGridDebugLine()
     {
-        for (int x = 0; x < m_gridarray.GetLength(0); x++)
+        for (int x = 0; x < getWidth(); x++)
         {
-            for (int y = 0; y < m_gridarray.GetLength(1); y++)
+            for (int y = 0; y < getHeight(); y++)
             {
 
                 Debug.DrawLine(worldPos(x, y), worldPos(x, y + 1), green, 100f);

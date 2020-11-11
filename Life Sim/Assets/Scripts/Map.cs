@@ -5,18 +5,15 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-
-    // private GridMap<int> m_gridMap;
-
     [SerializeField] private TileMapVisual tileMapVisual;
 
     TileMap m_tileMap;
 
+    TileMap.TileMapObject.TileMapSprite currentTileSprite = TileMap.TileMapObject.TileMapSprite.Grass;
+
     // Start is called before the first frame update
     void Start()
     {
-        // m_gridMap = new GridMap<int>(50, 50, 1f , (GridMap<int> g , int x, int y) => { return 0; });
-
         m_tileMap = new TileMap(50, 50, 1f);
 
 
@@ -25,7 +22,7 @@ public class Map : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -33,19 +30,27 @@ public class Map : MonoBehaviour
 
             Debug.Log(vec);
 
-            m_tileMap.setTileMapSprite(vec, TileMap.TileMapObject.TileMapSprite.Ground);
+            m_tileMap.setTileMapSprite(vec, currentTileSprite);
         }
 
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        //    vec.z = 0f;
+        if(Input.GetButton("Button1"))
+        {
+            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Grass;
+        }
+        else if(Input.GetButton("Button2"))
+        {
+            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Ground;
+        }
+        else if (Input.GetButton("Button3"))
+        {
+            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Sand;
+        }
+        else if (Input.GetButton("Button4"))
+        {
+            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Path;
+        }
 
-        //    Debug.Log(vec);
-
-        //    Debug.Log(m_gridMap.getGridObject(vec));
-        //}
     }
 
 }

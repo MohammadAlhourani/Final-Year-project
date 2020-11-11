@@ -27,6 +27,20 @@ public class TileMap
     public void setTileMapVisual(TileMapVisual tileMapVisual)
     {
         tileMapVisual.setGrid(this.m_gridMap);
+
+        TileMapObject tilemapObject;
+
+
+        //sets all the grid tiles with to be ground sprites as default
+        for (int x = 0; x < m_gridMap.getWidth(); x++)
+        {
+            for (int y = 0; y < m_gridMap.getHeight(); y++)
+            {
+                tilemapObject = m_gridMap.getGridObject(x, y);
+
+                tilemapObject.setTileMapSprite(TileMapObject.TileMapSprite.Grass);
+            }
+        }
     }
 
 
@@ -35,7 +49,12 @@ public class TileMap
         public enum TileMapSprite
         {
             None,
-            Ground
+            Grass,
+            Ground,
+            Sand,
+            Path
+            
+           
         }
 
 

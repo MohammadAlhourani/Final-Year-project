@@ -341,9 +341,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemapSpriteUVArray:
-  - tilemapSprite: 0
-    uv00Pixels: {x: 192, y: 0}
-    uv11Pixels: {x: 256, y: 64}
   - tilemapSprite: 1
+    uv00Pixels: {x: 0, y: 0}
+    uv11Pixels: {x: 64, y: 64}
+  - tilemapSprite: 2
     uv00Pixels: {x: 64, y: 0}
     uv11Pixels: {x: 128, y: 64}
+  - tilemapSprite: 3
+    uv00Pixels: {x: 128, y: 0}
+    uv11Pixels: {x: 192, y: 64}
+  - tilemapSprite: 4
+    uv00Pixels: {x: 192, y: 0}
+    uv11Pixels: {x: 256, y: 64}
