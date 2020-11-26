@@ -13,6 +13,11 @@ public class TileMap
     }
 
 
+    public GridMap<TileMapObject> GetGridMap()
+    {
+        return m_gridMap;
+    }
+
     public void setTileMapSprite(Vector3 worldPos , TileMapObject.TileMapSprite tileMapSprite)
     {
         TileMapObject tilemapObject = m_gridMap.getGridObject(worldPos);
@@ -56,8 +61,14 @@ public class TileMap
         }
 
         private GridMap<TileMapObject> grid;
-        private int x;
-        private int y;
+        public int x;
+        public int y;
+
+        public float m_hueristic;
+        public int m_pathCost;
+        public float m_fCost;
+        public bool passable = true;
+        public TileMapObject m_previous;
 
         private TileMapSprite tileMapSprite;
 
@@ -74,13 +85,25 @@ public class TileMap
             grid.triggerObjectChange(x, y);
         }
 
+        public void calFcost()
+        {
+            m_fCost = m_hueristic + m_pathCost;
+        }
+
 
         public TileMapSprite  getTileMapSprite()
         {
             return tileMapSprite;
         }
 
-        
+        public int getX()
+        {
+            return x;
+        }
 
+        public int getY()
+        {
+            return y;
+        }
     }
 }

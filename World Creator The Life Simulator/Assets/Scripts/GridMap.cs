@@ -78,7 +78,7 @@ public class GridMap<TGridObject>
 
 
     //returns x,y depending on the world pos
-    private void getXY(Vector3 t_position , out int t_x , out int t_y)
+    public void getXY(Vector3 t_position , out int t_x , out int t_y)
     {
         t_x = Mathf.FloorToInt(t_position.x / m_cellSize);
         t_y = Mathf.FloorToInt(t_position.y / m_cellSize);
