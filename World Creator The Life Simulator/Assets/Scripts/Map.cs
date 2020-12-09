@@ -30,57 +30,59 @@ public class Map : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (PauseMenu.gamePaused == false)
         {
-            Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            vec.z = 0f;
-
-            Debug.Log(vec);
-
-            m_tileMap.setTileMapSprite(vec, currentTileSprite);
-        }
-
-        if(Input.GetMouseButtonDown(1))
-        {
-            Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            vec.z = 0f;
-
-            m_tileMap.GetGridMap().getXY(vec , out int x , out int y);
-
-            List<TileMap.TileMapObject> path = getPathAStar(0 , 0, x ,y);
-
-            if(path != null)
+            if (Input.GetMouseButton(0))
             {
-                for(int i = 0; i < path.Count - 1; i++)
-                {
-                    Debug.DrawLine(new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, path[i + 1].y + 0.5f), red , 100f);
+                Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                    Debug.Log(path[i].x + " " + path[i].y);
-                }
+                vec.z = 0f;
+
+                Debug.Log(vec);
+
+                m_tileMap.setTileMapSprite(vec, currentTileSprite);
             }
 
-        }
+            if (Input.GetMouseButtonDown(1))
+            {
+                Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                vec.z = 0f;
+
+                m_tileMap.GetGridMap().getXY(vec, out int x, out int y);
+
+                List<TileMap.TileMapObject> path = getPathAStar(0, 0, x, y);
+
+                if (path != null)
+                {
+                    for (int i = 0; i < path.Count - 1; i++)
+                    {
+                        Debug.DrawLine(new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, path[i + 1].y + 0.5f), red, 100f);
+
+                        Debug.Log(path[i].x + " " + path[i].y);
+                    }
+                }
+
+            }
 
 
-        if (Input.GetButton("Button1"))
-        {
-            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Grass;
+            if (Input.GetButton("Button1"))
+            {
+                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Grass;
+            }
+            else if (Input.GetButton("Button2"))
+            {
+                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Ground;
+            }
+            else if (Input.GetButton("Button3"))
+            {
+                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Sand;
+            }
+            else if (Input.GetButton("Button4"))
+            {
+                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Path;
+            }
         }
-        else if (Input.GetButton("Button2"))
-        {
-            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Ground;
-        }
-        else if (Input.GetButton("Button3"))
-        {
-            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Sand;
-        }
-        else if (Input.GetButton("Button4"))
-        {
-            currentTileSprite = TileMap.TileMapObject.TileMapSprite.Path;
-        }
-
     }
 
 
