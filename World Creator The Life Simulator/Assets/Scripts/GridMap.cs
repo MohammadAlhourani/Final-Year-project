@@ -133,7 +133,7 @@ public class GridMap<TGridObject>
 
         getXY(t_pos, out x, out y);
 
-        Debug.Log(x + " " + y);
+       // Debug.Log(x + " " + y);
 
         if (x >= 0 && y >= 0 && x < m_width && y < m_height)
         {

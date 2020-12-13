@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    [SerializeField] private TileMapVisual tileMapVisual;
+    public TileMapVisual tileMapVisual;
 
     private const int MOVE_STRAIGHT = 10;
     private const int MOVE_DIAGONAL = 14;
@@ -30,7 +30,7 @@ public class Map : MonoBehaviour
 
     void Update()
     {
-        if (PauseMenu.gamePaused == false)
+        if (PauseMenu.GamePaused == false && WorldEditor.WorldEditorActive == true)
         {
             if (Input.GetMouseButton(0))
             {
@@ -38,7 +38,7 @@ public class Map : MonoBehaviour
 
                 vec.z = 0f;
 
-                Debug.Log(vec);
+               // Debug.Log(vec);
 
                 m_tileMap.setTileMapSprite(vec, currentTileSprite);
             }
@@ -83,6 +83,12 @@ public class Map : MonoBehaviour
                 currentTileSprite = TileMap.TileMapObject.TileMapSprite.Path;
             }
         }
+    }
+
+
+    public void setTileMapSprite(TileMap.TileMapObject.TileMapSprite mapSprite)
+    {
+        currentTileSprite = mapSprite;
     }
 
 
