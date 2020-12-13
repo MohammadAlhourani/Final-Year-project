@@ -64,24 +64,6 @@ public class Map : MonoBehaviour
                 }
 
             }
-
-
-            if (Input.GetButton("Button1"))
-            {
-                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Grass;
-            }
-            else if (Input.GetButton("Button2"))
-            {
-                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Ground;
-            }
-            else if (Input.GetButton("Button3"))
-            {
-                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Sand;
-            }
-            else if (Input.GetButton("Button4"))
-            {
-                currentTileSprite = TileMap.TileMapObject.TileMapSprite.Path;
-            }
         }
     }
 

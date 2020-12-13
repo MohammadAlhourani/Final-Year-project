@@ -196,8 +196,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147915233}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 113.8995, y: 171.72, z: -2389.5}
-  m_LocalScale: {x: 100, y: 100, z: 0}
+  m_LocalPosition: {x: 206, y: 252, z: -2389.5}
+  m_LocalScale: {x: 196.32872, y: 224.47818, z: 0}
   m_Children: []
   m_Father: {fileID: 1672512151}
   m_RootOrder: 4
@@ -626,6 +626,7 @@ GameObject:
   - component: {fileID: 1556983171}
   - component: {fileID: 1556983170}
   - component: {fileID: 1556983169}
+  - component: {fileID: 1556983172}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -698,6 +699,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1556983172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556983168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a42fca340b51ca4c8ed62f6195404d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorTexture: {fileID: 2800000, guid: 9ef75f43fa44b714ea5cb4f2766a25e1, type: 3}
 --- !u!1 &1620960486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,8 +1136,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -279, y: -0.04}
-  m_SizeDelta: {x: 0.08, y: 0.08}
+  m_AnchoredPosition: {x: -429, y: -0.063457}
+  m_SizeDelta: {x: 0.12883763, y: 0.12691443}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1865076683
 SpriteRenderer:
