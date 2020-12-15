@@ -7,8 +7,12 @@ public class Map : MonoBehaviour
 {
     public TileMapVisual tileMapVisual;
 
+    public CameraMovement MainCamera;
+
     private const int MOVE_STRAIGHT = 10;
     private const int MOVE_DIAGONAL = 14;
+
+    private float zoom = 30f;
 
     TileMap m_tileMap;
 
@@ -26,10 +30,21 @@ public class Map : MonoBehaviour
 
 
         m_tileMap.setTileMapVisual(tileMapVisual);
+
+
+
+        MainCamera.Setup(() => new Vector3(25, 25, -10), () => zoom);
+       // MainCamera.SetCameraFollowPos(() => new Vector3(25, 25, -10));
+
     }
 
     void Update()
     {
+        if(PauseMenu.GamePaused == false)
+        {
+            handleZoom();
+        }
+        
         if (PauseMenu.GamePaused == false && WorldEditor.WorldEditorActive == true)
         {
             if (Input.GetMouseButton(0))
@@ -254,4 +269,21 @@ public class Map : MonoBehaviour
 
     }
 
+
+    private void handleZoom()
+    {
+        float zoomChangeAmount = 80f;
+
+        if(Input.mouseScrollDelta.y > 0)
+        {
+            zoom -= zoomChangeAmount * Time.deltaTime * 10f;
+        }
+        
+        if(Input.mouseScrollDelta.y < 0)
+        {
+            zoom += zoomChangeAmount * Time.deltaTime * 10f;
+        }
+
+        zoom = Mathf.Clamp(zoom, 20f, 40f);
+    }
 }
