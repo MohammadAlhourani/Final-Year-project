@@ -18,12 +18,19 @@ public class ChaseNode : BNode
 
     public override NodeState Evaluate()
     {
-        Vector3 direction = m_target.position - m_oirgin.position;
+        if (m_target != null)
+        {
+            Vector3 direction = m_target.position - m_oirgin.position;
 
-        direction = Vector3.Normalize(direction) * m_speed;
+            direction = Vector3.Normalize(direction) * m_speed;
 
-        m_oirgin.position += direction;
+            m_oirgin.position += direction;
 
-        return NodeState.Running;
+            return NodeState.Running;
+        }
+        else
+        {
+            return NodeState.Failure;
+        }
     }
 }

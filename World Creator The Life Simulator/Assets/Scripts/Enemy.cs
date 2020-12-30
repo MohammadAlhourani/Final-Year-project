@@ -6,17 +6,22 @@ public class Enemy : Character
 {
     private BNode topNode;
 
-    public GameObject human;
+    [SerializeField] private float detectionRange = 0;
+    [SerializeField] private GameObject target;
 
-    [SerializeField] private float detectionRange;
+    private List<GameObject> m_gameObjects;
 
     public override void OnStarting()
     {
+        m_gameObjects = new List<GameObject>();
+
         constructBehaviourTree();
     }
 
     public override void OnUpdate()
     {
+        detectObjects();
+
         topNode.Evaluate();
 
         if (topNode.GetNodeState() == NodeState.Failure)
@@ -28,7 +33,7 @@ public class Enemy : Character
             gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
         }
 
-        DrawEllipse(gameObject.transform.position, Vector3.forward, Vector3.up, detectionRange, detectionRange, 30, new Color(255, 0, 0), 0.1f);
+        DrawEllipse(gameObject.transform.position, Vector3.forward, Vector3.up, detectionRange, detectionRange, 30, new Color(255, 0, 0), 0.1f);       
     }
 
     private void constructBehaviourTree()
@@ -37,9 +42,9 @@ public class Enemy : Character
 
         Inverter invertHealth = new Inverter(healthNode);
 
-        RangeNode Range = new RangeNode(detectionRange, human.transform, gameObject.transform);
+        RangeNode Range = new RangeNode(detectionRange, target.transform, gameObject.transform);
 
-        ChaseNode Chase = new ChaseNode(human.transform, gameObject.transform , 0.1f);
+        ChaseNode Chase = new ChaseNode(target.transform, gameObject.transform, 0.1f);
 
         Sequence ChaseSequence = new Sequence(new List<BNode> { invertHealth, Range, Chase });
 
@@ -65,6 +70,33 @@ public class Enemy : Character
 
             lastPoint = thisPoint;
             angle += 360f / segments;
+        }
+    }
+
+    private void detectObjects()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, detectionRange);
+
+        m_gameObjects.Clear();
+
+        for(int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject != gameObject)
+            {
+                m_gameObjects.Add(hitColliders[i].gameObject);
+            }
+        }
+
+        foreach(var gameobject in m_gameObjects)
+        { 
+            if(gameobject.CompareTag("Human"))
+            {
+                target = gameobject;
+
+                constructBehaviourTree();
+                break;
+            }
+
         }
     }
 }

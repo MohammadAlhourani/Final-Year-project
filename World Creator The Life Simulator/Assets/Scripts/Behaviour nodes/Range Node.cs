@@ -20,11 +20,14 @@ public class RangeNode : BNode
 
    public override NodeState Evaluate()
    {
-        float distance = Vector3.Distance(m_target.position, m_origin.position);
-
-        if(distance <= m_range)
+        if (m_target != null)
         {
-            return NodeState.Success;
+            float distance = Vector3.Distance(m_target.position, m_origin.position);
+
+            if (distance <= m_range)
+            {
+                return NodeState.Success;
+            }
         }
 
         return NodeState.Failure;
