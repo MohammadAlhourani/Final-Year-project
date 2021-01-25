@@ -25,7 +25,7 @@ public class Human : Character
 
     private void constructBehaviourTree()
     {
-        HealthNode healthNode = new HealthNode(this, lowHealthThreshold);
+        HealthNode healthNode = new HealthNode(this, m_lowHealthThreshold);
 
         Sequence fleeSequence = new Sequence(new List<BNode> { healthNode });
 

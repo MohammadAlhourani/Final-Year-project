@@ -18,9 +18,19 @@ public class TileMap
         return m_gridMap;
     }
 
-    public void setTileMapSprite(Vector3 worldPos , TileMapObject.TileMapSprite tileMapSprite)
+    public boundary getBoundary()
     {
-        TileMapObject tilemapObject = m_gridMap.getGridObject(worldPos);
+        return m_gridMap.getBoundary();
+    }
+
+    public TileMapObject GetTileMapObject(Vector3 t_worldPos)
+    {
+        return m_gridMap.getGridObject(t_worldPos);
+    }
+
+    public void setTileMapSprite(Vector3 t_worldPos , TileMapObject.TileMapSprite tileMapSprite)
+    {
+        TileMapObject tilemapObject = m_gridMap.getGridObject(t_worldPos);
 
         if(tilemapObject != null)
         {
@@ -68,6 +78,7 @@ public class TileMap
         public int m_pathCost;
         public float m_fCost;
         public bool passable = true;
+        public bool containsObject = false;
         public TileMapObject m_previous;
 
         private TileMapSprite tileMapSprite;

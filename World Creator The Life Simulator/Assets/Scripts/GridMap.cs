@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
 
+public struct boundary
+{
+   public float k_north;
+   public float k_south;
+   public float k_east;
+   public float k_west;
+}
 
 public class GridMap<TGridObject>
 {
@@ -31,7 +38,7 @@ public class GridMap<TGridObject>
 
     Color green = new Color(0, 255, 0);
 
-    
+    private boundary m_boundary;
 
     //constructor for a new map
     public GridMap(int t_x, int t_y , float t_cellsize, Func<GridMap<TGridObject>, int, int ,TGridObject> createGridObject)
@@ -42,6 +49,7 @@ public class GridMap<TGridObject>
 
         m_gridarray = new TGridObject[m_width, m_height];
 
+        CalcBoundary();
 
         //initilises the grid with default objects of its type
         for (int x = 0; x < m_gridarray.GetLength(0); x++)
@@ -76,6 +84,10 @@ public class GridMap<TGridObject>
         return (new Vector3(t_x, t_y , 0) * m_cellSize);
     }
 
+    public boundary getBoundary()
+    {
+        return m_boundary;
+    }
 
     //returns x,y depending on the world pos
     public void getXY(Vector3 t_position , out int t_x , out int t_y)
@@ -162,5 +174,17 @@ public class GridMap<TGridObject>
         Debug.DrawLine(worldPos(m_width, 0), worldPos(m_width, m_height), green, 100f);
 
         Debug.DrawLine(worldPos(0, m_height), worldPos(m_width, m_height), green, 100f);
+    }
+
+    private void CalcBoundary()
+    {
+       m_boundary.k_north = worldPos(0, m_height).y;
+        
+       m_boundary.k_south = worldPos(0, 0).y;
+       
+       m_boundary.k_east = worldPos(m_width, 0).x;
+        
+       m_boundary.k_west = worldPos(0, 0).x;
+       
     }
 }

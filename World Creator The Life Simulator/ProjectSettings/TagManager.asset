@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Human
   - Monster
+  - Wall
+  - Default
   layers:
   - Default
   - TransparentFX

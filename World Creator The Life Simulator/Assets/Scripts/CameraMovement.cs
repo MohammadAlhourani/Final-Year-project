@@ -13,12 +13,11 @@ public class CameraMovement : MonoBehaviour
 
     public bool EdgeScroll = false;
 
-
     public float edgeScrollSpeed;
 
     private float edgeSize = 10f;
 
-    private float boundary = 25f;
+    public float boundary = 25f;
 
     private Vector3 startPos;
 

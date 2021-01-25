@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldEditor : MonoBehaviour
 {
-    public static bool WorldEditorActive = false;
+    public static bool WorldEditorActive = false;    
 
     public GameObject WorldEditorUI;
 

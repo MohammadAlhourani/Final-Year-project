@@ -17,7 +17,7 @@ public class HealthNode : BNode
 
     public override NodeState Evaluate()
     {
-        if(m_character.GetCurrentHealth() <= m_threshold)
+        if(m_character.currentHealth <= m_threshold)
         {
             return NodeState.Success;
         }

@@ -9,14 +9,41 @@ public class Map : MonoBehaviour
 
     public CameraMovement MainCamera;
 
+    public int m_mapWidth = 10;
+
+    public int m_mapHeight = 10;
+
+    public float m_cellSize = 10.0f;
+
     private const int MOVE_STRAIGHT = 10;
     private const int MOVE_DIAGONAL = 14;
 
-    private float zoom = 30f;
+    private float zoom = 300f;
 
     TileMap m_tileMap;
 
-    TileMap.TileMapObject.TileMapSprite currentTileSprite = TileMap.TileMapObject.TileMapSprite.Grass;
+    public TileMap tileMap
+    {
+        get { return m_tileMap; }
+    }
+
+    TileMap.TileMapObject.TileMapSprite m_currentTileSprite = TileMap.TileMapObject.TileMapSprite.Grass;
+
+    public TileMap.TileMapObject.TileMapSprite currentTileSprite
+    { 
+        get { return m_currentTileSprite; }
+        set { m_currentTileSprite = value; }
+    }
+
+    public GameObject m_currentGameObject;
+
+    public GameObject currentGameObject
+    {
+        get { return m_currentGameObject; }
+        set { m_currentGameObject = value; }
+    }
+
+    public bool destroyObject = false;
 
     private List<TileMap.TileMapObject> openList;
     private List<TileMap.TileMapObject> closedList;
@@ -26,14 +53,12 @@ public class Map : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_tileMap = new TileMap(50, 50, 1f);
+        m_tileMap = new TileMap(m_mapWidth, m_mapHeight, m_cellSize);
 
 
         m_tileMap.setTileMapVisual(tileMapVisual);
 
-
-
-        MainCamera.Setup(() => new Vector3(25, 25, -10), () => zoom);
+          MainCamera.Setup(() => new Vector3(25, 25, -10), () => zoom);
        // MainCamera.SetCameraFollowPos(() => new Vector3(25, 25, -10));
 
     }
@@ -49,13 +74,46 @@ public class Map : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
-                Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                if (m_currentTileSprite != TileMap.TileMapObject.TileMapSprite.None)
+                {
+                    Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                vec.z = 0f;
+                    vec.z = 0f;
 
-               // Debug.Log(vec);
+                    m_tileMap.setTileMapSprite(vec, m_currentTileSprite);
+                }
 
-                m_tileMap.setTileMapSprite(vec, currentTileSprite);
+                if (destroyObject == false)
+                {
+                    if (m_currentGameObject.tag != "Default")
+                    {
+                        Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                        vec.z = 0f;
+
+                        TileMap.TileMapObject tilemapObject = m_tileMap.GetTileMapObject(vec);
+
+                        if (tilemapObject != null && tilemapObject.containsObject == false)
+                        {
+                            tilemapObject.passable = false;
+                            tilemapObject.containsObject = true;
+
+                            Vector3 objectpos = m_tileMap.GetGridMap().worldPos(tilemapObject.x, tilemapObject.y);
+
+                            GameObject currentObjectSpawn = Instantiate(m_currentGameObject, objectpos, Quaternion.identity);
+                        }
+                    }
+                }
+                else
+                {
+                    GameObject objectAtMouse = GetObjectAtMousePos();
+
+                    if(objectAtMouse != null)
+                    {
+                        Destroy(objectAtMouse);
+                    }
+                }
+
             }
 
             if (Input.GetMouseButtonDown(1))
@@ -89,7 +147,7 @@ public class Map : MonoBehaviour
     }
 
 
-    private List<TileMap.TileMapObject> getPathAStar(int startX, int startY, int endX, int endY)
+    public List<TileMap.TileMapObject> getPathAStar(int startX, int startY, int endX, int endY)
     {
        TileMap.TileMapObject startNode = getObject(startX, startY);
        TileMap.TileMapObject endNode = getObject(endX, endY); 
@@ -284,6 +342,24 @@ public class Map : MonoBehaviour
             zoom += zoomChangeAmount * Time.deltaTime * 10f;
         }
 
-        zoom = Mathf.Clamp(zoom, 20f, 40f);
+        zoom = Mathf.Clamp(zoom, 20f, 300f);
+    }
+
+    GameObject GetObjectAtMousePos()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        RaycastHit2D hit2 = Physics2D.Raycast(mousePos, Camera.main.transform.position - mousePos, 0);
+              
+
+        if (hit2.collider != null)
+        {
+           return hit2.transform.gameObject;
+           
+        }
+        else
+        {
+           return null;
+        }
     }
 }

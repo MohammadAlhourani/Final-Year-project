@@ -24,6 +24,7 @@ public class RangeNode : BNode
         {
             float distance = Vector3.Distance(m_target.position, m_origin.position);
 
+            DrawEllipse(m_origin.position, Vector3.forward, Vector3.up, m_range, m_range, 30, new Color(255, 0, 0), 0.1f);
             if (distance <= m_range)
             {
                 return NodeState.Success;
@@ -33,4 +34,30 @@ public class RangeNode : BNode
         return NodeState.Failure;
    }
 
+    public void setTarget(Transform t_target)
+    {
+        this.m_target = t_target;
+    }
+
+    private static void DrawEllipse(Vector3 pos, Vector3 forward, Vector3 up, float radiusX, float radiusY, int segments, Color color, float duration = 0)
+    {
+        float angle = 0f;
+        Quaternion rot = Quaternion.LookRotation(forward, up);
+        Vector3 lastPoint = Vector3.zero;
+        Vector3 thisPoint = Vector3.zero;
+
+        for (int i = 0; i < segments + 1; i++)
+        {
+            thisPoint.x = Mathf.Sin(Mathf.Deg2Rad * angle) * radiusX;
+            thisPoint.y = Mathf.Cos(Mathf.Deg2Rad * angle) * radiusY;
+
+            if (i > 0)
+            {
+                Debug.DrawLine(rot * lastPoint + pos, rot * thisPoint + pos, color, duration);
+            }
+
+            lastPoint = thisPoint;
+            angle += 360f / segments;
+        }
+    }
 }
