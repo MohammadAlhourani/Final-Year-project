@@ -6,7 +6,7 @@ public class Enemy : Character
 {
     private BNode topNode;
 
-    [SerializeField] private float m_detectionRange = 0;
+    
     [SerializeField] private float m_attackRange = 0;
     [SerializeField] private GameObject target;
 
@@ -43,6 +43,13 @@ public class Enemy : Character
 
         Inverter invertHealth = new Inverter(healthNode);
 
+        //Cover
+
+        GetCoverNode getCoverNode = new GetCoverNode(target.transform, this);
+
+        GoToCoverNode goToCoverNode = new GoToCoverNode(this, 0.1f);
+
+        Sequence CoverSequence = new Sequence(new List<BNode> { healthNode , getCoverNode , goToCoverNode});
 
         //chase
         Range = new RangeNode(m_detectionRange, target.transform, gameObject.transform);
@@ -69,7 +76,7 @@ public class Enemy : Character
 
 
         //root
-        topNode = new Selector(new List<BNode> {AttackSequence, ChaseSequence, WanderSequence });
+        topNode = new Selector(new List<BNode> {CoverSequence, AttackSequence, ChaseSequence, WanderSequence });
     }
 
   

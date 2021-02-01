@@ -8,7 +8,13 @@ public abstract class Character : MonoBehaviour
     [SerializeField] public float m_lowHealthThreshold;   
     [SerializeField] private float m_healthRegenRate;
 
+    [SerializeField] protected float m_detectionRange = 0;
+
     [SerializeField] private GameObject m_map;
+
+    private List<Cover> m_covers;
+
+    private Transform m_bestCoverSpot; 
 
     private List<TileMap.TileMapObject> m_path;
 
@@ -31,6 +37,7 @@ public abstract class Character : MonoBehaviour
 
     private void Start()
     {
+        m_covers = new List<Cover>();
         currentHealth = m_startingHealth;
         m_velocity = Vector3.zero;
         OnStarting();
@@ -78,5 +85,54 @@ public abstract class Character : MonoBehaviour
     public boundary getBoundary()
     {
        return m_map.GetComponent<Map>().tileMap.getBoundary();
+    }
+        
+    public void SetBestCover(Transform t_cover)
+    {
+        m_bestCoverSpot = t_cover;
+    }
+
+    public Transform GetBestCover()
+    {
+        return m_bestCoverSpot;
+    }
+
+    public Cover[] GetCoverAround()
+    {
+        CoverAround();
+
+        if (m_covers.Count > 0)
+        {
+            Cover[] covers = new Cover[m_covers.Count];
+
+            for (int i = 0; i < covers.Length; i++)
+            {
+                covers[i] = m_covers[i];
+            }
+
+            return covers;
+        }
+        else
+        {
+            return new Cover[0];
+        }
+    }
+
+    private void CoverAround()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, m_detectionRange);
+
+        m_covers.Clear();
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject != gameObject)
+            {
+                if (hitColliders[i].gameObject.CompareTag("Wall") == true)
+                {
+                    m_covers.Add(hitColliders[i].gameObject.GetComponent<Cover>());
+                }
+            }
+        }
     }
 }
