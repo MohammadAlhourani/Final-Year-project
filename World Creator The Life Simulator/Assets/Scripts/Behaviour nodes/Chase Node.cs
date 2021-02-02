@@ -22,11 +22,11 @@ public class ChaseNode : BNode
         {
             Vector3 direction = m_target.position - m_origin.transform.position;
 
-            direction = Vector3.Normalize(direction) * m_speed;
+            direction = Vector3.Normalize(direction) ;
 
             m_origin.velocity = direction;
 
-            m_origin.transform.position += direction;
+            m_origin.transform.position += direction * m_speed * Time.deltaTime;
 
             return NodeState.Running;
         }

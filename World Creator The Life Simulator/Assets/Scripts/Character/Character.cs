@@ -6,7 +6,9 @@ public abstract class Character : MonoBehaviour
 {
     [SerializeField] private float m_startingHealth;
     [SerializeField] public float m_lowHealthThreshold;   
-    [SerializeField] private float m_healthRegenRate;
+    [SerializeField] protected float m_healthRegenRate;
+
+    [SerializeField] protected float m_speed;
 
     [SerializeField] protected float m_detectionRange = 0;
 

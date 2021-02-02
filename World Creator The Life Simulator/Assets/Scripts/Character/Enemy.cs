@@ -39,22 +39,26 @@ public class Enemy : Character
 
     private void constructBehaviourTree()
     {
+        //health node checks if health is below threshold
         HealthNode healthNode = new HealthNode(this, m_lowHealthThreshold);
 
+        //inverted health checks if health is above threshhold
         Inverter invertHealth = new Inverter(healthNode);
 
         //Cover
 
         GetCoverNode getCoverNode = new GetCoverNode(target.transform, this);
 
-        GoToCoverNode goToCoverNode = new GoToCoverNode(this, 0.1f);
+        GoToCoverNode goToCoverNode = new GoToCoverNode(this, m_speed);
 
-        Sequence CoverSequence = new Sequence(new List<BNode> { healthNode , getCoverNode , goToCoverNode});
+        HealNode Heal = new HealNode(20, this, m_healthRegenRate);
+
+        Sequence CoverSequence = new Sequence(new List<BNode> { healthNode , getCoverNode , goToCoverNode , Heal});
 
         //chase
         Range = new RangeNode(m_detectionRange, target.transform, gameObject.transform);
 
-        Chase = new ChaseNode(target.transform, this, 0.1f);
+        Chase = new ChaseNode(target.transform, this, m_speed);
 
         Sequence ChaseSequence = new Sequence(new List<BNode> { invertHealth, Range, Chase });
 
@@ -63,7 +67,7 @@ public class Enemy : Character
 
         Inverter invertWanderRange = new Inverter(wanderRange);
 
-        WanderNode wander = new WanderNode(this, 0.05f);
+        WanderNode wander = new WanderNode(this, m_speed);
 
         Sequence WanderSequence = new Sequence(new List<BNode> { invertWanderRange, wander  });
 

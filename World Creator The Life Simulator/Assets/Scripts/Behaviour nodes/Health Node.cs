@@ -19,8 +19,6 @@ public class HealthNode : BNode
     {
         if(m_character.currentHealth <= m_threshold)
         {
-            //Debug.Log("cover failed");
-
             return NodeState.Success;
         }
        
