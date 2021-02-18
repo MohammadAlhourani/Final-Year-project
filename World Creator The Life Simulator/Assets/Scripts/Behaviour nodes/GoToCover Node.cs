@@ -60,7 +60,7 @@ public class GoToCoverNode : BNode
                 if (righthit2d.transform != m_origin.transform)
                 {
                     Debug.DrawLine(RightRay, righthit2d.point, new Color(0, 0, 255));
-                    direction += (Vector3)righthit2d.normal * 10f;
+                    direction +=  (Vector3)righthit2d.normal * 10f;
                 }
             }
 

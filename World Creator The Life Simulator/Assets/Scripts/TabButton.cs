@@ -8,8 +8,6 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
 {
     public TabGroup tabGroup;
 
-
-
     public void OnPointerClick(PointerEventData t_eventData)
     {
         tabGroup.OnTabSelect(this);
