@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField] private float m_startingHealth;
-    [SerializeField] public float m_lowHealthThreshold;   
+    [SerializeField] public float m_lowHealthThreshold;
     [SerializeField] protected float m_healthRegenRate;
 
     [SerializeField] protected float m_speed;
@@ -14,9 +14,13 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField] private GameObject m_map;
 
+    [SerializeField] private UnitHealthBar m_healthBar;
+
+    [SerializeField] public TreeStats m_stats;
+
     private List<Cover> m_covers;
 
-    private Transform m_bestCoverSpot; 
+    private Transform m_bestCoverSpot;
 
     private List<TileMap.TileMapObject> m_path;
 
@@ -30,10 +34,20 @@ public abstract class Character : MonoBehaviour
         set { m_currentHealth = Mathf.Clamp(value, 0, m_startingHealth); }
     }
 
+    public TreeStats stats
+    {
+        get { return m_stats; }
+    }
+
     public Vector3 velocity
     {
-        get { return m_velocity; }    
+        get { return m_velocity; }
         set { m_velocity = value; }
+    }
+
+    public List<TileMap.TileMapObject> path
+    {
+         get { return m_path; }
     }
 
 
@@ -42,6 +56,10 @@ public abstract class Character : MonoBehaviour
         m_covers = new List<Cover>();
         currentHealth = m_startingHealth;
         m_velocity = Vector3.zero;
+        m_path = new List<TileMap.TileMapObject>();
+
+        m_healthBar.setMaxHealth(m_startingHealth);
+
         OnStarting();
     }
 
@@ -136,5 +154,13 @@ public abstract class Character : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    public void Damage(float t_damage)
+    {
+        m_currentHealth -= t_damage;
+
+        m_healthBar.setCurrentHealth(m_currentHealth);
     }
 }

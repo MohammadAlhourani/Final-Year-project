@@ -18,6 +18,9 @@ public class GetCoverNode : BNode
 
     public override NodeState Evaluate()
     {
+        m_origin.stats.nodesEvaluatedincrease();
+        m_origin.stats.actionsPerformedIncrease();
+
         m_cover = m_origin.GetCoverAround();
 
         if (m_cover.Length > 0)

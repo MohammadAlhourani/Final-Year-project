@@ -14,8 +14,7 @@ public class Inverter : BNode
 
 
     public override NodeState Evaluate()
-    {
-        
+    {       
        
             switch (this.node.Evaluate())
             {

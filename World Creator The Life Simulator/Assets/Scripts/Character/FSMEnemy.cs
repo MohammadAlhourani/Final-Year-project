@@ -17,6 +17,8 @@ public class FSMEnemy : Character
     [SerializeField] private float m_attackRange = 0;
     [SerializeField] private GameObject m_target;
 
+    [SerializeField] private FieldOfView m_visionCone;
+
     private List<GameObject> m_gameObjects;
 
     private EnemyState m_state = EnemyState.Wander;
@@ -42,6 +44,7 @@ public class FSMEnemy : Character
     public override void OnUpdate()
     {
         Transitions();
+        detectObjects();
 
         switch (m_state)
         {
@@ -112,6 +115,10 @@ public class FSMEnemy : Character
 
     private void detectObjects()
     {
+
+        m_visionCone.setDirection(m_velocity);
+        m_visionCone.setOrigin(transform.position);
+
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, m_detectionRange);
 
         m_gameObjects.Clear();
@@ -148,7 +155,9 @@ public class FSMEnemy : Character
         {
             case EnemyState.Attack:
                 {
-                    if(m_currentHealth <= m_lowHealthThreshold)
+                    stats.conditionsCheckedIncrease(3);
+
+                    if (m_currentHealth <= m_lowHealthThreshold)
                     {
                         m_state = EnemyState.Cover;
                     }
@@ -168,6 +177,7 @@ public class FSMEnemy : Character
                 }
             case EnemyState.Chase:
                 {
+                    stats.conditionsCheckedIncrease(3);
 
                     if (m_currentHealth <= m_lowHealthThreshold)
                     {
@@ -188,6 +198,7 @@ public class FSMEnemy : Character
                 }
             case EnemyState.Cover:
                 {
+                    stats.conditionsCheckedIncrease(3);
 
                     if (distance > m_attackRange &&
                         distance < m_detectionRange)
@@ -209,6 +220,7 @@ public class FSMEnemy : Character
                 }
             case EnemyState.Wander:
                 {
+                    stats.conditionsCheckedIncrease();
 
                     if (distance > m_attackRange &&
                         distance < m_detectionRange)

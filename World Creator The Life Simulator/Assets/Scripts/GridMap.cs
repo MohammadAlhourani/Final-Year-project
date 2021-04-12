@@ -60,7 +60,7 @@ public class GridMap<TGridObject>
             }
         }
 
-        //setGridDebugLine();
+        setGridDebugLine();
     }
 
     public int getWidth()
@@ -144,8 +144,6 @@ public class GridMap<TGridObject>
         int y;
 
         getXY(t_pos, out x, out y);
-
-       // Debug.Log(x + " " + y);
 
         if (x >= 0 && y >= 0 && x < m_width && y < m_height)
         {

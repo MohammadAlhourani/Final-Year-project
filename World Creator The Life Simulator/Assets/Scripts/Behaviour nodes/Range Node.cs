@@ -8,18 +8,23 @@ public class RangeNode : BNode
     private float m_range;
     private Transform m_target;
     private Transform m_origin;
+    private Character m_character;
 
-    public RangeNode(float t_range , Transform t_target, Transform t_origin)
+    public RangeNode(float t_range , Transform t_target, Transform t_origin, Character t_character)
     {
         this.m_range = t_range;
         this.m_target = t_target;
         this.m_origin = t_origin;
+        this.m_character = t_character;
     }
 
 
 
    public override NodeState Evaluate()
    {
+        m_character.stats.nodesEvaluatedincrease();
+        m_character.stats.conditionsCheckedIncrease();
+
         if (m_target != null)
         {
             float distance = Vector3.Distance(m_target.position, m_origin.position);

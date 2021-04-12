@@ -10,17 +10,17 @@ public class Human : Character
 
     public override void OnStarting()
     {
-        constructBehaviourTree();
+        //constructBehaviourTree();
     }
 
     public override void OnUpdate()
     {
-        topNode.Evaluate();
+        //topNode.Evaluate();
 
-        if(topNode.GetNodeState() == NodeState.Failure)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
-        }
+        //if(topNode.GetNodeState() == NodeState.Failure)
+        //{
+        //    gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+        //}
     }
 
     private void constructBehaviourTree()

@@ -116,5 +116,10 @@ public class TileMap
         {
             return y;
         }
+
+        public Vector3 GetWorldPos()
+        {
+            return grid.worldPos(x, y) + new Vector3(grid.getCellSize() / 2.0f, grid.getCellSize() / 2.0f);
+        }
     }
 }

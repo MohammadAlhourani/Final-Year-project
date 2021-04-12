@@ -17,6 +17,9 @@ public class HealNode : BNode
 
     public override NodeState Evaluate()
     {
+        m_origin.stats.nodesEvaluatedincrease();
+        m_origin.stats.actionsPerformedIncrease();
+
         m_origin.StartCoroutine(HealOverTimeCoroutine(m_amountToHeal, m_regenAmount, m_origin));
 
         return NodeState.Success;

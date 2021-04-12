@@ -35,8 +35,11 @@ public class WanderNode : BNode
 
     public override NodeState Evaluate()
     {
+        m_origin.stats.nodesEvaluatedincrease();
+        m_origin.stats.actionsPerformedIncrease();
+
         //timer for chaning the direction
-        if(timer > 0)
+        if (timer > 0)
         {
             timer -= Time.deltaTime;
         }
@@ -52,6 +55,8 @@ public class WanderNode : BNode
         //ensuring character doesnt go out of map bounds
         boundary();
 
+        int layerMask = ~(LayerMask.GetMask("Enemy"));
+
         //ray from the leftmost point of the character
         Vector3 LeftRay = m_origin.transform.position;
         //ray from the rightmost point of the character
@@ -62,9 +67,9 @@ public class WanderNode : BNode
         RightRay.x += 2.7f;
 
         //racasts for the 3 point in front , to the left and right of the character
-        RaycastHit2D hit2d = Physics2D.Raycast(m_origin.transform.position, Vector2.up, 5);
-        RaycastHit2D lefthit2d = Physics2D.Raycast(LeftRay, Vector2.up, 5);
-        RaycastHit2D righthit2d = Physics2D.Raycast(RightRay, Vector2.up, 5);
+        RaycastHit2D hit2d = Physics2D.Raycast(m_origin.transform.position, Vector2.up, 5, layerMask);
+        RaycastHit2D lefthit2d = Physics2D.Raycast(LeftRay, Vector2.up, 5, layerMask);
+        RaycastHit2D righthit2d = Physics2D.Raycast(RightRay, Vector2.up, 5, layerMask);
 
         //if the front raycast hit something
         if (hit2d.collider != null)
@@ -114,6 +119,9 @@ public class WanderNode : BNode
         //setting the velocity to the direction this is to rotate the 
         //characters sprite to match the direction it is moving
         m_origin.velocity = m_direction;
+
+
+        m_speed = 5;
 
         //moving the charcter
         m_origin.transform.position += m_direction * m_speed * Time.deltaTime;

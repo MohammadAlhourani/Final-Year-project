@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
+
+    [SerializeField]
+    private StatsUI statsUI;
+
     public TileMapVisual tileMapVisual;
 
     public CameraMovement MainCamera;
@@ -44,6 +48,7 @@ public class Map : MonoBehaviour
     }
 
     public bool destroyObject = false;
+    public bool InspectObject = false;
 
     private List<TileMap.TileMapObject> openList;
     private List<TileMap.TileMapObject> closedList;
@@ -65,10 +70,7 @@ public class Map : MonoBehaviour
 
     void Update()
     {
-        if(PauseMenu.GamePaused == false)
-        {
-            handleZoom();
-        }
+
         
         if (PauseMenu.GamePaused == false && WorldEditor.WorldEditorActive == true)
         {
@@ -95,10 +97,11 @@ public class Map : MonoBehaviour
 
                         if (tilemapObject != null && tilemapObject.containsObject == false)
                         {
-                            tilemapObject.passable = false;
+                            tilemapObject.passable = false;                            
                             tilemapObject.containsObject = true;
 
-                            Vector3 objectpos = m_tileMap.GetGridMap().worldPos(tilemapObject.x, tilemapObject.y);
+                            Vector3 objectpos = tilemapObject.GetWorldPos();
+                            objectpos.z = 0;
 
                             GameObject currentObjectSpawn = Instantiate(m_currentGameObject, objectpos, Quaternion.identity);
                         }
@@ -108,13 +111,27 @@ public class Map : MonoBehaviour
                 {
                     GameObject objectAtMouse = GetObjectAtMousePos();
 
-                    if(objectAtMouse != null)
+                    if (objectAtMouse != null)
                     {
                         Destroy(objectAtMouse);
+
+                        Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                        vec.z = 0f;
+
+                        TileMap.TileMapObject tilemapObject = m_tileMap.GetTileMapObject(vec);
+
+                        tilemapObject.passable = true;
+                        tilemapObject.containsObject = false;
                     }
-                }
+                }         
+
+
 
             }
+            
+           
+
 
             if (Input.GetMouseButtonDown(1))
             {
@@ -136,6 +153,40 @@ public class Map : MonoBehaviour
                     }
                 }
 
+            }
+        }
+
+        if (PauseMenu.GamePaused == false)
+        {
+            handleZoom();
+
+            if (Input.GetMouseButton(0))
+            {
+                if (InspectObject == true)
+                {
+                    GameObject objectAtMouse = GetObjectAtMousePos();
+
+                    if (objectAtMouse != null)
+                    {
+                        Debug.Log(objectAtMouse.tag);
+
+                        if (objectAtMouse.tag == "Monster")
+                        {                            
+                            if (objectAtMouse.GetComponent<Enemy>() != null)
+                            {                               
+                                statsUI.InspectVanilla(objectAtMouse.GetComponent<Enemy>());
+                            }
+                            else if (objectAtMouse.GetComponent<FSMEnemy>() != null)
+                            {                                
+                                statsUI.InspectFSM(objectAtMouse.GetComponent<FSMEnemy>());
+                            }
+                            else if (objectAtMouse.GetComponent<CNMEnemy>() != null)
+                            {                                
+                                statsUI.InspectCNM(objectAtMouse.GetComponent<CNMEnemy>());
+                            }
+                        }
+                    }                   
+                }
             }
         }
     }
@@ -162,10 +213,10 @@ public class Map : MonoBehaviour
             {
                 TileMap.TileMapObject pathNode = m_tileMap.GetGridMap().getGridObject(x, y);
 
-                pathNode.m_pathCost = int.MaxValue;
-                pathNode.calFcost();
-                pathNode.m_previous = null;
 
+                    pathNode.m_pathCost = int.MaxValue;
+                    pathNode.calFcost();
+                    pathNode.m_previous = null;
             }
         }
 
@@ -187,9 +238,20 @@ public class Map : MonoBehaviour
 
             foreach (TileMap.TileMapObject neighbourNode in getNeighBours(currentNode))
             {
+                
 
                 if(closedList.Contains(neighbourNode))
                 {
+                    continue;
+                }
+
+                if (neighbourNode.passable == false)
+                {                  
+                    closedList.Add(neighbourNode);
+
+                    Debug.Log(neighbourNode.GetWorldPos());
+                    Debug.Log("not passable");
+
                     continue;
                 }
 
@@ -361,5 +423,12 @@ public class Map : MonoBehaviour
         {
            return null;
         }
+    }
+
+    public TileMap.TileMapObject GetTileMapObject(Vector3 t_position)
+    {
+        TileMap.TileMapObject tilemapObject = m_tileMap.GetTileMapObject(t_position);
+
+        return tilemapObject;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,10 @@ public class Enemy : Character
     [SerializeField] private float m_attackRange = 0;
     [SerializeField] private GameObject target;
 
-    private List<GameObject> m_gameObjects;
+    [SerializeField] private FieldOfView m_visionCone;  
+
+    
+   private List<GameObject> m_gameObjects;
 
     RangeNode Range;
     ChaseNode Chase;
@@ -20,14 +24,14 @@ public class Enemy : Character
 
     public override void OnStarting()
     {
-        m_gameObjects = new List<GameObject>();
+        m_gameObjects = new List<GameObject>();        
 
         constructBehaviourTree();
     }
 
     public override void OnUpdate()
     {
-        detectObjects();
+        detectObjects();       
 
         topNode.Evaluate();
 
@@ -56,14 +60,14 @@ public class Enemy : Character
         Sequence CoverSequence = new Sequence(new List<BNode> { healthNode , getCoverNode , goToCoverNode , Heal});
 
         //chase
-        Range = new RangeNode(m_detectionRange, target.transform, gameObject.transform);
+        Range = new RangeNode(m_detectionRange, target.transform, gameObject.transform, this);
 
         Chase = new ChaseNode(target.transform, this, m_speed);
 
         Sequence ChaseSequence = new Sequence(new List<BNode> { invertHealth, Range, Chase });
 
         //wander
-        RangeNode wanderRange = new RangeNode(m_detectionRange, target.transform, gameObject.transform);
+        RangeNode wanderRange = new RangeNode(m_detectionRange, target.transform, gameObject.transform, this);
 
         Inverter invertWanderRange = new Inverter(wanderRange);
 
@@ -72,7 +76,7 @@ public class Enemy : Character
         Sequence WanderSequence = new Sequence(new List<BNode> { invertWanderRange, wander  });
 
         //attack
-        attackRange = new RangeNode(m_attackRange, target.transform, gameObject.transform);
+        attackRange = new RangeNode(m_attackRange, target.transform, gameObject.transform, this);
 
         attack = new AttackNode(target.transform, this);
 
@@ -86,6 +90,9 @@ public class Enemy : Character
   
     private void detectObjects()
     {
+        m_visionCone.setDirection(m_velocity);
+        m_visionCone.setOrigin(transform.position);
+
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, m_detectionRange);
 
         m_gameObjects.Clear();
@@ -98,8 +105,9 @@ public class Enemy : Character
             }
         }
 
-        foreach(var gameobject in m_gameObjects)
-        { 
+        foreach(var gameobject in m_visionCone.GetGameObjects())
+        {         
+
             if(gameobject.CompareTag("Human"))
             {
                 target = gameobject;
