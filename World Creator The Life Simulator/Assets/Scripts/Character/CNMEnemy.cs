@@ -28,19 +28,25 @@ public class CNMEnemy : Character
     }
 
     public override void OnUpdate()
-    {
-        detectObjects();
-
-
-        m_topNode.Evaluate();
-
-        if (m_topNode.GetNodeState() == NodeState.Failure)
+    {       
+        if (currentHealth > 0)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 10);
-        }
+            detectObjects();
 
-        visionCone.setDirection(m_velocity);
-        visionCone.setOrigin(transform.position);
+            m_topNode.Evaluate();
+
+            if (m_topNode.GetNodeState() == NodeState.Failure)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 10);
+            }
+
+            visionCone.setDirection(m_velocity);
+            visionCone.setOrigin(transform.position);
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 255, 10);
+        }
     }
 
     private void constructBehaviourTree()

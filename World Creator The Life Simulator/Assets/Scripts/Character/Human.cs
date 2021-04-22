@@ -5,30 +5,67 @@ using UnityEngine;
 public class Human : Character
 {
 
-    private BNode topNode;
+    
 
 
     public override void OnStarting()
     {
-        //constructBehaviourTree();
+       
     }
 
     public override void OnUpdate()
     {
-        //topNode.Evaluate();
-
-        //if(topNode.GetNodeState() == NodeState.Failure)
-        //{
-        //    gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
-        //}
+        Movement();
+        Aim();
     }
 
-    private void constructBehaviourTree()
+    private void Movement()
     {
-        HealthNode healthNode = new HealthNode(this, m_lowHealthThreshold);
+        if(Input.GetButton("W"))
+        {
 
-        Sequence fleeSequence = new Sequence(new List<BNode> { healthNode });
+            if (transform.position.y + m_speed < getBoundary().k_north)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + m_speed * Time.deltaTime, 0);
+            }
+        }
 
-        topNode = new Selector(new List<BNode> { fleeSequence });
+        if (Input.GetButton("A"))
+        {
+            if (transform.position.x - m_speed > getBoundary().k_west)
+            {
+                transform.position = new Vector3(transform.position.x - m_speed * Time.deltaTime, transform.position.y, 0);
+            }
+        }
+
+        if (Input.GetButton("S"))
+        {
+            if (transform.position.y - m_speed > getBoundary().k_south)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - m_speed * Time.deltaTime, 0);
+            }
+        }
+
+        if (Input.GetButton("D"))
+        {
+            if (transform.position.x + m_speed < getBoundary().k_east)
+            {
+                transform.position = new Vector3(transform.position.x + m_speed * Time.deltaTime, transform.position.y, 0);
+            }
+        }
+    }
+
+    private void Aim()
+    {
+        Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+        vec.z = 0;
+
+        m_velocity = vec;
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            BulletRaycast.PlayerShoot(transform.position, vec);
+        }
     }
 }

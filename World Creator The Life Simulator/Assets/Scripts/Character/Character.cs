@@ -159,8 +159,11 @@ public abstract class Character : MonoBehaviour
 
     public void Damage(float t_damage)
     {
-        m_currentHealth -= t_damage;
+        if (currentHealth > 0)
+        {
+            m_currentHealth -= t_damage;
 
-        m_healthBar.setCurrentHealth(m_currentHealth);
+            m_healthBar.setCurrentHealth(m_currentHealth);
+        }
     }
 }

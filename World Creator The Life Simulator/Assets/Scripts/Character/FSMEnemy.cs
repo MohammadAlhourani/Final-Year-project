@@ -43,36 +43,45 @@ public class FSMEnemy : Character
 
     public override void OnUpdate()
     {
-        Transitions();
-        detectObjects();
 
-        switch (m_state)
+
+        if (currentHealth > 0)
         {
-            case EnemyState.Attack:
-                {
-                    attackTopNode.Evaluate();
-                    break;
-                }
-            case EnemyState.Chase:
-                {
-                    chaseTopNode.Evaluate();
-                    break;
-                }
-            case EnemyState.Cover:
-                {
-                    coverTopNode.Evaluate();
-                    break;
-                }
-            case EnemyState.Wander:
-                {
-                    WanderTopNode.Evaluate();
-                    break;
-                }
-           default:
-                {
-                    gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 10);
-                    break;
-                }
+            Transitions();
+            detectObjects();
+
+            switch (m_state)
+            {
+                case EnemyState.Attack:
+                    {
+                        attackTopNode.Evaluate();
+                        break;
+                    }
+                case EnemyState.Chase:
+                    {
+                        chaseTopNode.Evaluate();
+                        break;
+                    }
+                case EnemyState.Cover:
+                    {
+                        coverTopNode.Evaluate();
+                        break;
+                    }
+                case EnemyState.Wander:
+                    {
+                        WanderTopNode.Evaluate();
+                        break;
+                    }
+                default:
+                    {
+                        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 10);
+                        break;
+                    }
+            }
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 255, 10);
         }
     }
 

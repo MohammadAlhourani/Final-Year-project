@@ -30,15 +30,23 @@ public class Enemy : Character
     }
 
     public override void OnUpdate()
-    {
-        detectObjects();       
+    {      
 
-        topNode.Evaluate();
-
-        if (topNode.GetNodeState() == NodeState.Failure)
+        if (currentHealth > 0)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0 , 10);
-        }       
+            detectObjects();
+
+            topNode.Evaluate();
+
+            if (topNode.GetNodeState() == NodeState.Failure)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 10);
+            }
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 255, 10);
+        }
     }
 
     private void constructBehaviourTree()

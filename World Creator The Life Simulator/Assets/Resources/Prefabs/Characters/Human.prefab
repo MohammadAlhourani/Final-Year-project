@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8840998087265603330}
   - component: {fileID: 8590174441649725056}
   - component: {fileID: 8590174441649725059}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Human
   m_TagString: Human
   m_Icon: {fileID: 0}
@@ -162,6 +162,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8590174441649725057}
     m_Modifications:
+    - target: {fileID: 5716977765976003509, guid: 31165607920bb0840bd9e1b091689196,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716977766569136109, guid: 31165607920bb0840bd9e1b091689196,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5716977766633967500, guid: 31165607920bb0840bd9e1b091689196,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -226,6 +236,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716977766633967501, guid: 31165607920bb0840bd9e1b091689196,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31165607920bb0840bd9e1b091689196, type: 3}

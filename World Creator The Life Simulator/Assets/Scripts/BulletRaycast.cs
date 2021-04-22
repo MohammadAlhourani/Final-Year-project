@@ -16,6 +16,8 @@ public static class BulletRaycast
         if(raycastHit.collider != null)
         {
             Debug.Log(raycastHit.collider.gameObject.name);
+
+            raycastHit.collider.gameObject.GetComponent<Human>().Damage(10);
         }
     }
 
@@ -23,13 +25,26 @@ public static class BulletRaycast
     {
         int layerMask = ~(LayerMask.GetMask("Player"));
 
-        RaycastHit2D raycastHit = Physics2D.Raycast(t_shootPos, t_shootDir, 50, layerMask);
+        RaycastHit2D raycastHit = Physics2D.Raycast(t_shootPos, t_shootDir, Vector3.Magnitude(t_shootDir), layerMask);
 
         BulletTracer(t_shootPos, raycastHit.point);
 
         if (raycastHit.collider != null)
         {
             Debug.Log(raycastHit.collider.gameObject.name);
+
+            if (raycastHit.collider.gameObject.GetComponent<Enemy>() != null)
+            {
+                raycastHit.collider.gameObject.GetComponent<Enemy>().Damage(10);
+            }
+            else if (raycastHit.collider.gameObject.GetComponent<FSMEnemy>() != null)
+            {
+                raycastHit.collider.gameObject.GetComponent<FSMEnemy>().Damage(10);
+            }
+            else if (raycastHit.collider.gameObject.GetComponent<CNMEnemy>() != null)
+            {
+                raycastHit.collider.gameObject.GetComponent<CNMEnemy>().Damage(10);
+            }
         }
     }
 
