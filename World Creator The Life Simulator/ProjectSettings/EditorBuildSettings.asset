@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WorldScene.unity
     guid: d7418671d2f24e445ac6cec39a22bc8c
+  - enabled: 1
+    path: Assets/Scenes/VanillaScene.unity
+    guid: 5edd02119a5fc364697d8f03c0a0166f
+  - enabled: 1
+    path: Assets/Scenes/FSMScene.unity
+    guid: 56008d68f839625418340258c9ce9563
+  - enabled: 1
+    path: Assets/Scenes/CNMScene.unity
+    guid: 699723c5f5d43ba4d80e6b9bfc46022f
   m_configObjects: {}

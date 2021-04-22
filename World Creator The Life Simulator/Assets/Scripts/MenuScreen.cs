@@ -12,6 +12,21 @@ public class MenuScreen : MonoBehaviour
        SceneManager.LoadScene("WorldScene");
     }
 
+    public void VanillaWorld()
+    {
+        SceneManager.LoadScene("VanillaScene");
+    }
+
+    public void FSMWorld()
+    {
+        SceneManager.LoadScene("FSMScene");
+    }
+
+    public void CNMWorld()
+    {
+        SceneManager.LoadScene("CNMScene");
+    }
+
     public void Quit()
     {
         Application.Quit();

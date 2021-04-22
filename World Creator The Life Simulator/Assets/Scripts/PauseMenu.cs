@@ -42,6 +42,7 @@ public class PauseMenu : MonoBehaviour
     public void Menu()
     {
         GamePaused = false;
+        Time.timeScale = 1.0f;
         WorldEditor.WorldEditorActive = false;
         SceneManager.LoadScene("Scenes/Menu");
     }
