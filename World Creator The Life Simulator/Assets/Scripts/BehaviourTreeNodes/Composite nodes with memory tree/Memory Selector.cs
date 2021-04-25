@@ -24,7 +24,7 @@ public class MemorySelector : MBNode
             {
                 NodeState currentState = topNode.GetnodeTypeState(node.getId());
 
-                if (currentState == null)
+                if (currentState == default(NodeState))
                 {
                     switch (node.Evaluate())
                     {
