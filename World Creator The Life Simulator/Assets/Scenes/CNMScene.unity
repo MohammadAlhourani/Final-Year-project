@@ -1207,12 +1207,17 @@ PrefabInstance:
     - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
       propertyPath: m_healthRegenRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6160028379113797293, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
       propertyPath: m_Name
       value: CNMChaser (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160028379113797293, guid: 0d98297811411fa4387d240e14102d08,
+        type: 3}
+      propertyPath: m_TagString
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 8583321189037579992, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
@@ -1410,29 +1415,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 927561773}
-    - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
-        type: 3}
       propertyPath: m_map
       value: 
       objectReference: {fileID: 2126266992}
     - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 927561773}
+    - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
+        type: 3}
       propertyPath: visionCone
       value: 
       objectReference: {fileID: 1003874545}
-    - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
-        type: 3}
-      propertyPath: m_speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
-        type: 3}
-      propertyPath: m_healthRegenRate
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6160028379113797293, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
       propertyPath: m_Name
@@ -3954,12 +3949,17 @@ PrefabInstance:
     - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
       propertyPath: m_healthRegenRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6160028379113797293, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
       propertyPath: m_Name
       value: CNMChaser (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160028379113797293, guid: 0d98297811411fa4387d240e14102d08,
+        type: 3}
+      propertyPath: m_TagString
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 8583321189037579992, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
@@ -5268,7 +5268,7 @@ PrefabInstance:
     - target: {fileID: 4853000556525771046, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}
       propertyPath: m_healthRegenRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6160028379113797293, guid: 0d98297811411fa4387d240e14102d08,
         type: 3}

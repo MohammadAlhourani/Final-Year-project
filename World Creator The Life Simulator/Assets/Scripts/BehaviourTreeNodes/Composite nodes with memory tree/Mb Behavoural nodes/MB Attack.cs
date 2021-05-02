@@ -20,11 +20,12 @@ public class MBAttack : MBNode
     public override NodeState Evaluate()
     {
         m_origin.stats.nodesEvaluatedincrease();
-       
 
         Vector3 direction = m_target.position - m_origin.transform.position;
 
         direction = Vector3.Normalize(direction);
+
+        timer -= Time.deltaTime;
 
         if (timer <= 0)
         {

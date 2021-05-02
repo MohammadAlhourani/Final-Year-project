@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4700791763950687452}
   m_Layer: 10
   m_Name: CNMChaser
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_startingHealth: 100
   m_lowHealthThreshold: 30
   m_healthRegenRate: 0
-  m_speed: 0
+  m_speed: 5
   m_detectionRange: 50
   m_map: {fileID: 0}
   m_healthBar: {fileID: 4504688785604146697}

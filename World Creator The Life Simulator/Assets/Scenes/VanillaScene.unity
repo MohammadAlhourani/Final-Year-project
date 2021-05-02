@@ -171,7 +171,7 @@ PrefabInstance:
     - target: {fileID: 2366521628468080168, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}
       propertyPath: m_healthRegenRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2366521628468080168, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}
@@ -3256,7 +3256,7 @@ PrefabInstance:
     - target: {fileID: 2366521628468080168, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}
       propertyPath: m_healthRegenRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2366521628468080168, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}
@@ -3528,7 +3528,7 @@ PrefabInstance:
     - target: {fileID: 2366521628468080168, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}
       propertyPath: m_healthRegenRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2366521628468080169, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}
@@ -4572,7 +4572,7 @@ PrefabInstance:
     - target: {fileID: 2366521628468080168, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}
       propertyPath: m_healthRegenRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2366521628468080168, guid: 14f07f0df98f3ca4b95071c312adf206,
         type: 3}

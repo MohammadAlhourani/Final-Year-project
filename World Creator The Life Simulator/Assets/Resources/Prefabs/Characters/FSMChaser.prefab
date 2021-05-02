@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2562981941783025973}
   m_Layer: 10
   m_Name: FSMChaser
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_stats: {fileID: 4708113597669584206}
   m_attackRange: 25
   m_target: {fileID: 0}
-  visionCone: {fileID: 0}
+  m_visionCone: {fileID: 0}
 --- !u!114 &4708113597669584206
 MonoBehaviour:
   m_ObjectHideFlags: 0
