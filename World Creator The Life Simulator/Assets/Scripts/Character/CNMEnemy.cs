@@ -89,7 +89,7 @@ public class CNMEnemy : Character
         MemorySequence ChaseSequence = new MemorySequence(new List<MBNode> { invertHealth, m_Range, m_Chase }, m_topNode);
 
         //wander
-        MBRange wanderRange = new MBRange(m_detectionRange, target.transform, gameObject.transform, this, m_topNode, 3);
+        MBRange wanderRange = new MBRange(m_detectionRange, target.transform, gameObject.transform, this, m_topNode, 2);
 
         MemoryInverter invertWanderRange = new MemoryInverter(wanderRange, m_topNode);
 
