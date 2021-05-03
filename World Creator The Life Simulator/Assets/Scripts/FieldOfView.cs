@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//class to create and display a vision cone using raycasts
+//
 public class FieldOfView : MonoBehaviour
 {
-
+    //mesh for the visual representation of the vision cone
     Mesh mesh;
 
+    //the field of view
     float fov;
 
+    //the starting angle of the vision cone
     float startingAngle;
 
+    //starting point of the vision cone
     Vector3 origin;
 
+    //gameobjetc in the vision cone
     List<GameObject> gameObjects;
 
     // Start is called before the first frame update
@@ -92,6 +98,7 @@ public class FieldOfView : MonoBehaviour
         mesh.triangles = triangles;
     }
 
+    //gets a vector3 from an angle
     public Vector3 GetVector3Fromangle(float angle)
     {
         float angleRad = angle * (Mathf.PI / 180f);
@@ -99,6 +106,7 @@ public class FieldOfView : MonoBehaviour
         return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
     }
 
+    //gets and angle from a vector
     public float getAngleFromVector(Vector3 vector)
     {
         vector = vector.normalized;
@@ -108,16 +116,19 @@ public class FieldOfView : MonoBehaviour
         return rotation;
     }
 
+    //sets the origin of the vision cone
     public void setOrigin(Vector3 t_origin)
     {
         origin = t_origin;
     }
 
+    //sets the direction of the vision cone
     public void setDirection(Vector3 t_direction)
     {
         startingAngle = getAngleFromVector(t_direction) - fov / 2f;
     }
 
+    //gets the list of game objects
     public List<GameObject> GetGameObjects()
     {
         return gameObjects;

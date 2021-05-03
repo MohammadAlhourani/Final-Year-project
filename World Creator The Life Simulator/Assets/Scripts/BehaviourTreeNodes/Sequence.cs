@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//the sequence composite node
+//node evaluates children in order 
+//if any child returns failure this node will return failure
+//if all children retun success this node will return success
 public class Sequence : BNode
 {
-
+    //list of  children nodes
     protected List<BNode> nodes = new List<BNode>();
 
 
+    //constructer for the node
     public Sequence(List<BNode> t_nodes)
     {
         this.nodes = t_nodes;
     }
 
-
+    //evaluates all children nodes
     public override NodeState Evaluate()
     {
         bool isAnyChildRunning = false;
@@ -34,7 +39,7 @@ public class Sequence : BNode
             }
 
         }
-
+        // sets the nodestate to running if a child is still running
         if(isAnyChildRunning == true)
         {
             m_nodeState = NodeState.Running;

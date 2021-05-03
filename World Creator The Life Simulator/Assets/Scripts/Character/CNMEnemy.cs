@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//enemy that use the Composite nodes with memeory Behaviour tree
 public class CNMEnemy : Character
 {
-
+    //range which the enemy will begin to attack its target
     [SerializeField] private float m_attackRange = 0;
+
+    //the enemies target to attck
     [SerializeField] private GameObject target;
 
+    //the charcters vision cone
     [SerializeField] private FieldOfView visionCone;
 
+    //list of gameobjects in the charcters vision cone
+    //and around the character
     private List<GameObject> m_gameObjects;
 
     MBRange m_Range;
@@ -17,8 +23,11 @@ public class CNMEnemy : Character
     MBRange m_attackRangeNode;
     MBAttack m_attack;
 
+    //rootnode of the behaviour tree
     MBTopNode m_topNode;
 
+
+    //start function called on the first frame
     public override void OnStarting()
     {
         m_gameObjects = new List<GameObject>();
@@ -27,8 +36,12 @@ public class CNMEnemy : Character
         constructBehaviourTree();
     }
 
+    //the update function called every frame
     public override void OnUpdate()
-    {       
+    {
+
+        //if the characters health is above 0 the behaviour tree will run
+        //otherwise the charcater is considered "Dead"
         if (currentHealth > 0)
         {
             detectObjects();
@@ -40,7 +53,7 @@ public class CNMEnemy : Character
                 gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 10);
             }
 
-            visionCone.setDirection(m_velocity);
+            visionCone.setDirection(m_direction);
             visionCone.setOrigin(transform.position);
         }
         else
@@ -49,6 +62,7 @@ public class CNMEnemy : Character
         }
     }
 
+    //builds the characters behaviour tree
     private void constructBehaviourTree()
     {
         //health node checks if health is below threshold
@@ -93,7 +107,7 @@ public class CNMEnemy : Character
         m_topNode.setNodes(new List<MBNode> { CoverSequence, AttackSequence, ChaseSequence, WanderSequence });        
     }
 
-
+    //gets the abjects around the charcter and in the vision cone 
     private void detectObjects()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, m_detectionRange);

@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
+//the attack raycast class
 public static class BulletRaycast 
 {
+    //the enemy shoot
+    //shoot a raycast that when is collides with a player
+    //it will damage the player
+    //ignores enemies
     public static void EnemyShoot(Vector3 t_shootPos, Vector3 t_shootDir)
     {
         int layerMask = ~(LayerMask.GetMask("Enemy"));
@@ -21,6 +26,10 @@ public static class BulletRaycast
         }
     }
 
+    //the player shoot
+    //shoots a raycast that when it collides with an enemy
+    //it will damage the enemy
+    //ignores the player
     public static void PlayerShoot(Vector3 t_shootPos, Vector3 t_shootDir)
     {
         int layerMask = ~(LayerMask.GetMask("Player"));
@@ -48,6 +57,8 @@ public static class BulletRaycast
         }
     }
 
+    //creates a mesh to visually represent the raycast
+    //then deletes the mesh after a few seconds
     private static void BulletTracer(Vector3 t_startPoint, Vector3 t_endPoint)
     {
         Vector3 direction = (t_endPoint - t_startPoint).normalized;

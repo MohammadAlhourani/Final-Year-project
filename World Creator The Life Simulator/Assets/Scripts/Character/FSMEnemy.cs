@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//states of the Finite state machine
 public enum EnemyState
 {
     Wander,
@@ -11,29 +11,41 @@ public enum EnemyState
     Cover
 }
 
-
+//enemy that uses the FSM behaviour tree
 public class FSMEnemy : Character
 {
+    //range which the enemy will begin to attack its target
     [SerializeField] private float m_attackRange = 0;
+
+    //the enemies target to attck
     [SerializeField] private GameObject m_target;
 
+    //the characters vision cone
     [SerializeField] private FieldOfView m_visionCone;
 
+    //list of gameobjects in the characters vision cone
+    //and around the character
     private List<GameObject> m_gameObjects;
 
+    //the characters current state
     private EnemyState m_state = EnemyState.Wander;
 
+    //root node of the wander behaviour
     private BNode WanderTopNode;
 
+    //root node of the chase behaviour
     private BNode chaseTopNode;
 
+    //root node of the attck behaviour
     private BNode attackTopNode;
 
+    //root node of the cover behaviour
     private BNode coverTopNode;
 
     ChaseNode m_chase;
     AttackNode m_attack;
 
+    //start function called on the first frame
     public override void OnStarting()
     {
         m_gameObjects = new List<GameObject>();
@@ -41,10 +53,12 @@ public class FSMEnemy : Character
         constructBehaviourTree();
     }
 
+    //the update function called every frame
     public override void OnUpdate()
     {
 
-
+        //if the characters health is above 0 the behaviour tree will run
+        //otherwise the charcater is considered "Dead"
         if (currentHealth > 0)
         {
             Transitions();
@@ -85,6 +99,7 @@ public class FSMEnemy : Character
         }
     }
 
+    //builds the characters behaviour tree
     private void constructBehaviourTree()
     {
         ////Cover
@@ -122,10 +137,11 @@ public class FSMEnemy : Character
 
     }
 
+    //gets the abjects around the charcter and in the vision cone 
     private void detectObjects()
     {
 
-        m_visionCone.setDirection(m_velocity);
+        m_visionCone.setDirection(m_direction);
         m_visionCone.setOrigin(transform.position);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, m_detectionRange);
@@ -156,6 +172,7 @@ public class FSMEnemy : Character
         }
     }
 
+    //transitions for the FSM to swap between states
     private void Transitions()
     {
         float distance = Vector3.Distance(m_target.transform.position, gameObject.transform.position);

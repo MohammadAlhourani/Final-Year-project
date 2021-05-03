@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
+//handles tab button functionality
 public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     public TabGroup tabGroup;
@@ -28,11 +30,5 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
     void Start()
     {
         tabGroup.AddToList(this);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

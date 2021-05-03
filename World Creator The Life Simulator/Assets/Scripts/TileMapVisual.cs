@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//visual representaion of the tile map
+//creates a mesh that displays the tile map
 public class TileMapVisual : MonoBehaviour
 {
     [System.Serializable]

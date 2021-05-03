@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//class to alter the looks of the cursor
 public class CursorManager : MonoBehaviour
 {
     public Texture2D cursorTexture;
@@ -13,9 +14,4 @@ public class CursorManager : MonoBehaviour
         Cursor.SetCursor(cursorTexture, new Vector2(9, 9), CursorMode.Auto);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

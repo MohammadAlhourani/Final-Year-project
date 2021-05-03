@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
 
+
+//the map in the world 
 public class Map : MonoBehaviour
 {
 
@@ -64,14 +66,12 @@ public class Map : MonoBehaviour
         m_tileMap.setTileMapVisual(tileMapVisual);
 
           MainCamera.Setup(() => new Vector3(25, 25, -10), () => zoom);
-       // MainCamera.SetCameraFollowPos(() => new Vector3(25, 25, -10));
-
     }
 
     void Update()
     {
 
-        
+        //handles world editing if the pause menu is inactive
         if (PauseMenu.GamePaused == false && WorldEditor.WorldEditorActive == true)
         {
             if (Input.GetMouseButton(0))
@@ -124,38 +124,11 @@ public class Map : MonoBehaviour
                         tilemapObject.passable = true;
                         tilemapObject.containsObject = false;
                     }
-                }         
-
-
-
-            }
-            
-           
-
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                vec.z = 0f;
-
-                m_tileMap.GetGridMap().getXY(vec, out int x, out int y);
-
-                List<TileMap.TileMapObject> path = getPathAStar(0, 0, x, y);
-
-                if (path != null)
-                {
-                    for (int i = 0; i < path.Count - 1; i++)
-                    {
-                        Debug.DrawLine(new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, path[i + 1].y + 0.5f), red, 100f);
-
-                        Debug.Log(path[i].x + " " + path[i].y);
-                    }
-                }
-
+                }        
             }
         }
 
+        //handles character inspection if the pause menu is inactive
         if (PauseMenu.GamePaused == false)
         {
             handleZoom();
@@ -191,13 +164,14 @@ public class Map : MonoBehaviour
         }
     }
 
-
+    // sets the current tilemapsprite 
     public void setTileMapSprite(TileMap.TileMapObject.TileMapSprite mapSprite)
     {
         currentTileSprite = mapSprite;
     }
 
 
+    //A* start pathfinding
     public List<TileMap.TileMapObject> getPathAStar(int startX, int startY, int endX, int endY)
     {
        TileMap.TileMapObject startNode = getObject(startX, startY);
@@ -277,6 +251,7 @@ public class Map : MonoBehaviour
 
     }
 
+    //gets the neighbour nodes of a node
     private List<TileMap.TileMapObject> getNeighBours(TileMap.TileMapObject Node)
     {
         List<TileMap.TileMapObject> neighbourNodes = new List<TileMap.TileMapObject>();
@@ -335,13 +310,14 @@ public class Map : MonoBehaviour
         return neighbourNodes;
     }
 
-
+    //gets the tile object at the x and y
     private TileMap.TileMapObject getObject(int t_x, int t_y)
     {
         return m_tileMap.GetGridMap().getGridObject(t_x, t_y);
     }
 
-
+    //get the previous of the goal
+    //until it reaches a null whicj is the start point
     private List<TileMap.TileMapObject> calPath(TileMap.TileMapObject endNode)
     {
         List<TileMap.TileMapObject> PathToNode = new List<TileMap.TileMapObject>();
@@ -362,6 +338,7 @@ public class Map : MonoBehaviour
         return PathToNode;
     }
 
+    //calculates the hueristic
     private int calculateHeuristic(TileMap.TileMapObject nodeA , TileMap.TileMapObject nodeB)
     {
         int xDistance = Mathf.Abs(nodeA.getX() - nodeB.getX());
@@ -372,6 +349,7 @@ public class Map : MonoBehaviour
         return MOVE_DIAGONAL * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT * remaining;
     }
 
+    //finds the lowest pathcost in a list of nodes
     private TileMap.TileMapObject lowestPathNode(List<TileMap.TileMapObject> t_pathnode)
     {
         TileMap.TileMapObject lowestNode = t_pathnode[0];
@@ -389,7 +367,7 @@ public class Map : MonoBehaviour
 
     }
 
-
+    //handles the zoom
     private void handleZoom()
     {
         float zoomChangeAmount = 80f;
@@ -407,6 +385,7 @@ public class Map : MonoBehaviour
         zoom = Mathf.Clamp(zoom, 20f, 300f);
     }
 
+    //returns the first object at the mouse position
     GameObject GetObjectAtMousePos()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -425,6 +404,8 @@ public class Map : MonoBehaviour
         }
     }
 
+
+    //gets the tile map object at the vector position
     public TileMap.TileMapObject GetTileMapObject(Vector3 t_position)
     {
         TileMap.TileMapObject tilemapObject = m_tileMap.GetTileMapObject(t_position);

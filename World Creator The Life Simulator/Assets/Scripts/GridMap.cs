@@ -12,6 +12,9 @@ public struct boundary
    public float k_west;
 }
 
+//the gridmap class
+//2D array that hold the tile map objects 
+//functions for getting info
 public class GridMap<TGridObject>
 {
 

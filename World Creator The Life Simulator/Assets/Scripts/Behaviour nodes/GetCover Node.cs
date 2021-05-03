@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//get cover node
+//gets the best cover around the character if possible
 public class GetCoverNode : BNode
 {
     private Cover[] m_cover;

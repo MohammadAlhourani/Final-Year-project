@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//tab group for the world editor
 public class TabGroup : MonoBehaviour
 {
     public List<TabButton> tabButtons;

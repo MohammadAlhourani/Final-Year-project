@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//chase behaviour
+//chases a point until closes enough to attack
 public class ChaseNode : BNode
 {
     private Transform m_target;

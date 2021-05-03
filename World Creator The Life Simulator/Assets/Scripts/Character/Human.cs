@@ -61,7 +61,7 @@ public class Human : Character
 
         vec.z = 0;
 
-        m_velocity = vec;
+        m_direction = vec;
 
         if (Input.GetMouseButtonDown(1))
         {

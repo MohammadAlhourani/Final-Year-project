@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//heal behaviour node
+//starts a heal over time for the character
 public class HealNode : BNode
 {
     private float m_regenAmount = 0;

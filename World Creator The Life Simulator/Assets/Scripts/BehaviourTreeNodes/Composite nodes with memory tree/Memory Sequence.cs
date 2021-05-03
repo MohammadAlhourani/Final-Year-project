@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//sequence node with memory
 public class MemorySequence : MBNode
 {
+    //list of the children nodes
     protected List<MBNode> nodes = new List<MBNode>();
 
+    //the behaviour trees top node
     private MBTopNode topNode;
 
+    //constructor
     public MemorySequence(List<MBNode> t_nodes , MBTopNode t_topNode)
     {
         this.nodes = t_nodes;
@@ -15,12 +20,15 @@ public class MemorySequence : MBNode
         this.topNode = t_topNode;
     }
 
-
+    //evaluates the child nodes
     public override NodeState Evaluate()
     {
         bool isAnyChildRunning = false;
         foreach (var node in nodes)
         {
+            //checks if the node is a question node 
+            //checks if the node is in the root nodes dictionary
+            //evaluate the node if it isnt
             if (node.getType() == NodeType.Question)
             {
                 NodeState currentState = topNode.GetnodeTypeState(node.getId());

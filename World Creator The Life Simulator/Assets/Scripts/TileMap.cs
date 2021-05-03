@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+
+//tile map class 
+// hold the gridmap of tile map objects and
+//functions for info
 public class TileMap 
 {
     private GridMap<TileMapObject> m_gridMap;
@@ -58,7 +62,8 @@ public class TileMap
         }
     }
 
-
+    //tile map object
+    //holds the information for each tile
     public class TileMapObject
     {
         public enum TileMapSprite

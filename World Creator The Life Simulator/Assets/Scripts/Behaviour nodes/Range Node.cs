@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//range node 
 public class RangeNode : BNode
 {
-
+    //range threshold
     private float m_range;
+
+    //targets position
     private Transform m_target;
+
+    //characters position
     private Transform m_origin;
+
+    //origin character 
     private Character m_character;
 
+    //constructor
     public RangeNode(float t_range , Transform t_target, Transform t_origin, Character t_character)
     {
         this.m_range = t_range;
@@ -19,7 +27,9 @@ public class RangeNode : BNode
     }
 
 
-
+    //evaluates the node
+    //checks the distance between two points
+    //if the distance is less tham the threshhold return success
    public override NodeState Evaluate()
    {
         m_character.stats.nodesEvaluatedincrease();
@@ -39,11 +49,13 @@ public class RangeNode : BNode
         return NodeState.Failure;
    }
 
+    //sets the target
     public void setTarget(Transform t_target)
     {
         this.m_target = t_target;
     }
 
+    //visual representation of the range as a circle
     private static void DrawEllipse(Vector3 pos, Vector3 forward, Vector3 up, float radiusX, float radiusY, int segments, Color color, float duration = 0)
     {
         float angle = 0f;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//function for the world editor
 public class WorldEditorObjectsTiles : MonoBehaviour
 {
     public Map m_map;

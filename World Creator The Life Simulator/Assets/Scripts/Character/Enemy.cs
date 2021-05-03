@@ -3,25 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//basic enemy uses the Vanilla Behaviour tree 
 public class Enemy : Character
 {
+    //rootnode of the behaviour tree
     private BNode topNode;
-
     
+    //range which the enemy will begin to attack its target
     [SerializeField] private float m_attackRange = 0;
+
+    //the enemies target to attck
     [SerializeField] private GameObject target;
 
+    //the characters vision cone
     [SerializeField] private FieldOfView m_visionCone;  
 
-    
-   private List<GameObject> m_gameObjects;
+    //list of gameobjects in the characters vision cone
+    //and around the character
+    private List<GameObject> m_gameObjects;
+
 
     RangeNode Range;
     ChaseNode Chase;
     RangeNode attackRange;
     AttackNode attack;
 
-
+    //start function called on the first frame
     public override void OnStarting()
     {
         m_gameObjects = new List<GameObject>();        
@@ -29,9 +36,11 @@ public class Enemy : Character
         constructBehaviourTree();
     }
 
+    //the update function called every frame
     public override void OnUpdate()
     {      
-
+        //if the characters health is above 0 the behaviour tree will run
+        //otherwise the charcater is considered "Dead"
         if (currentHealth > 0)
         {
             detectObjects();
@@ -49,6 +58,7 @@ public class Enemy : Character
         }
     }
 
+    //builds the characters behaviour tree
     private void constructBehaviourTree()
     {
         //health node checks if health is below threshold
@@ -91,14 +101,14 @@ public class Enemy : Character
         Sequence AttackSequence = new Sequence(new List<BNode> { attackRange, attack });
 
 
-        //root
+        //root node
         topNode = new Selector(new List<BNode> {CoverSequence, AttackSequence, ChaseSequence, WanderSequence });
     }
 
-  
+    //gets the abjects around the charcter and in the vision cone 
     private void detectObjects()
     {
-        m_visionCone.setDirection(m_velocity);
+        m_visionCone.setDirection(m_direction);
         m_visionCone.setOrigin(transform.position);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, m_detectionRange);

@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//class to control camera movement
+//edgecroll and zoom
 public class CameraMovement : MonoBehaviour
 {
-
+    //camera object
     private Camera camera;
 
     private Func<Vector3> GetCameraFollowPos;
@@ -64,7 +67,7 @@ public class CameraMovement : MonoBehaviour
         handleZoom();
     }
 
-
+    //follow keeps a position in the centre of the screen 
     void handleMovement()
     {
         Vector3 FollowPosition = GetCameraFollowPos();
@@ -73,7 +76,7 @@ public class CameraMovement : MonoBehaviour
         transform.position = FollowPosition;
     }
 
-
+    //controls zoom
     void handleZoom()
     {
         float cameraZoom = GetCameraZoom();
@@ -97,6 +100,7 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
+    //controls edgescrolling within a boundary
     void edgeScrolling()
     {
         Vector3 Position = transform.position;
@@ -140,7 +144,7 @@ public class CameraMovement : MonoBehaviour
 
         transform.position = Position;
 
-
+        //visual display for the boundary only in the editor
         Debug.DrawLine(new Vector3(startPos.x + boundary , startPos.y + boundary , 0), new Vector3(startPos.x + boundary, startPos.y - boundary, 0), blue, 100f);
 
         Debug.DrawLine(new Vector3(startPos.x  - boundary, startPos.y - boundary, 0), new Vector3(startPos.x + boundary, startPos.y - boundary, 0), blue, 100f);

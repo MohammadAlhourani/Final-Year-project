@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//go to cover behaviour
+//pathfind the character to the best cover spot 
+//and moves the character towards it
 public class GoToCoverNode : BNode
 {
     private Character m_origin;

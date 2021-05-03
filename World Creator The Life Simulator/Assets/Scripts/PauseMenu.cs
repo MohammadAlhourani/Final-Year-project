@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//pause screen functions
 public class PauseMenu : MonoBehaviour
 {
+    //bool for if the game is paused
     public static bool GamePaused = false;
 
+    //the pause screen UI
     public GameObject PauseMenuUI;
 
+    //checks fo if the escape key is pressed to activate/deactivate the pause screen UI
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -24,6 +28,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    //resume from the pause screen
     public void ResumeGame()
     {
         PauseMenuUI.SetActive(false);
@@ -31,6 +36,7 @@ public class PauseMenu : MonoBehaviour
         GamePaused = false;
     }
 
+    //activate the pasue screen
     public void PauseGame()
     {
         PauseMenuUI.SetActive(true);
@@ -38,7 +44,7 @@ public class PauseMenu : MonoBehaviour
         GamePaused = true;
     }
 
-
+    //return to the main menu from the pause screen
     public void Menu()
     {
         GamePaused = false;
@@ -47,6 +53,7 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("Scenes/Menu");
     }
 
+    //quit the application
     public void Quit()
     {
         Application.Quit();
